@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="../static/css/register.css" rel='stylesheet' type='text/css'/>
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/toastr.min.css" />
+    <script src="/static/js/toastr.min.js"></script>
+    <title>Sign Up</title>
+</head>
+
+<body>
+    <div class="header">
+        <img src="../static/images/register.png">
+        <h1>User registration</h1>
+    </div>
+    <div class="main">
+        <div class="main-container">
+        <div class="container-header"></div>
+        <div class="title-img">
+            <img src="../static/images/sign_up.png">
+        </div>
+
+        <div class="register-list">
+
+            <div class="gender-list">
+                <p >Gender:
+                    <input type="radio" name="gender" value="male" checked="checked" >Male
+                    <input type="radio" name="gender" value="female" >Female
+                </p>
+            </div>
+
+
+            <div class="account-list">
+                <img src="../static/images/order.png">
+                <input type="text" id="nickname" placeholder="Account"><br>
+            </div>
+
+            <div class="username-list">
+                <img src="../static/images/account.png">
+                <input type="text" id="username" placeholder="Username Length equal to eight characters"><br>
+            </div>
+
+            <div class="password-list">
+                <img src="../static/images/password.png">
+                <input type="password" id="password" placeholder="Password Contain uppercase and lowercase alphanumeric"><br>
+            </div>
+
+            <div class="password-list">
+                <img src="../static/images/Email.png">
+                <input type="email" id="email" placeholder="Email"><br>
+            </div>
+
+            <div class="password-list">
+                <img src="../static/images/age.png">
+                <input type="text" id="age" placeholder="Age"><br>
+            </div>
+
+            <div class="password-list">
+                <img src="../static/images/phone.png">
+                <input type="text" id="phone" placeholder="Phone"><br>
+            </div>
+
+            <div class="password-list">
+                <img src="../static/images/birthday.png">
+                <input type="text" id="birthday" placeholder="Birthday       example:1998/10/22">
+            </div>
+
+            <div class="button-end">
+                <button value="Sign up" onclick="register()" style="margin-right: 15%">Sign up</button>
+                <button value="Sign in" onclick="login()">Sign in</button>
+            </div>
+
+        </div>
+        <div class="container-end"></div>
+    </div>
+    </div>
+
+
+
+</body>
+
+</html>
+<script>
+       function register() {
+            var item = null;
+            var obj = document.getElementsByName("gender")
+            for (var i = 0; i < obj.length; i++) { //遍历Radio
+                if (obj[i].checked) {
+                    item = obj[i].value;
+                }
+            }
+            var formdata = {
+                "gender": item,
+                "username": $("#username").val(),
+                "password": $("#password").val(),
+                "nickname": $("#nickname").val(),
+                "email": $("#email").val(),
+                "age": $("#age").val(),
+                "phone": $("#phone").val(),
+                "birthday": $("#birthday").val()
+            }
+            $.ajax({
+                url: "/register",
+                data: JSON.stringify(formdata),
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                success: function(result) {
+                    if (result.result == "OK") {
+                        toastr["success"]("注册成功正在返回登录界面登录")
+                        setTimeout(function(){
+                            window.location.href = "/login";
+                        }, 1000);
+                    } else if (result.result == "NO") {
+                        toastr["error"](result.msg)
+                    }
+                },
+                error: function() {
+                    toastr["error"]("网络连接失败");
+                }
+            })
+       }
+
+       function login(){
+            toastr.success("正在返回登录界面")
+            setTimeout(function(){
+                window.location.href = "/login";
+            }, 1000);
+       }
+
+
+        function getValue(){
+            // method 1
+            var radio = document.getElementsByName("DoorCt");
+            for (i=0; i<radio.length; i++) {
+                if (radio[i].checked) {
+                    alert(radio[i].value)
+                }
+            }
+        }
+</script>

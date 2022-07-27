@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/css/sign_in_log_manager.css">
+</head>
+<body>
+    <div class="sign_in_log">
+        <div class="title">
+            <h1>Sign In Log</h1>
+            <p>You can check whether the user checked in on the same day</p>
+        </div>
+        <div class="log">
+
+            <table id="tfhover" class="tftable" border="1">
+                <thead><tr><th>Username</th><th>Account</th><th>Time</th><th>Tag</th></tr></thead>
+                <tbody id="tb"></tbody>
+            </table>
+        </div>
+    </div>
+
+
+</body>
+</html>
+<script src="../static/js/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../static/media/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="../static/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript">
+    window.onload=function(){
+
+        const time = new Date()
+        const year = time.getFullYear()
+        const month = time.getMonth() + 1
+        const date = time.getDate()
+        const formdate = {
+                "year": year,
+                "month": month,
+                "date": date
+        }
+        $.ajax({
+            url: "/check_sign_in",
+            data: JSON.stringify(formdate),
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            success: function(result) {
+                var i = 0
+                var j = 0
+                for(i;i<result.userSignLog.length;i++){
+                    const table1 = `
+                        <tr><td>${result.userSignLog[i].nickname}</td><td>${result.userSignLog[i].name}</td><td>${result.userSignLog[i].year}.${result.userSignLog[i].month}.${result.userSignLog[i].date}/${result.userSignLog[i].hour}:${result.userSignLog[i].minute}:${result.userSignLog[i].second}</td><td><img src="../static/images/hook.png" style="width:15px; height:15px;"></td></tr>
+                    `
+                    $('#tb').append(table1)
+
+                }
+
+                for(j;j<result.user.length;j++){
+                    if(result.user[j].nickname != "manager"){
+                        const table2 = `
+                            <tr><td>${result.user[j].nickname}</td><td>${result.user[j].username}</td><td>No sign-in time</td><td><img src="../static/images/cross.png" style="width:15px; height:15px;"></td></tr>
+                        `
+                        $('#tb').append(table2)
+                    }
+                }
+                $('#tfhover').dataTable({
+                    "bLengthChange":false,
+                    "bPaginage":false
+                })
+            }
+        })
+    }
+</script>

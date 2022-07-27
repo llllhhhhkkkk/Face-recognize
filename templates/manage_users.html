@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>manage users</title>
+    <script src="../static/js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/toastr.min.css" />
+    <script src="/static/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="../static/css/manage_users.css">
+</head>
+<body>
+    <div class="main">
+        <div class="header">
+            <h1>Manage Users</h1>
+            <p>Manage Users,you can modify or delete the information of these users </p>
+        </div>
+
+        <div class="user-info" id="1">
+            <div class="user-head">
+                <p>Avatar</p>
+                <p>Account</p>
+                <p>Nickname</p>
+                <p>Gender</p>
+                <p style="border-right:none;">Change</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    window.onload=function(){
+        $.ajax({
+                url: "/get_users",
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                success: function(result) {
+                    console.log(result)
+                    var i = 0
+                    for(i;i < result.length;i++){
+                        if(result[i].nickname != "manager"){
+                            const table = `<div class="users-info">
+                                               <div class="avatar">
+                                                    <img style="width: 30px; height: 30px; border-radius: 100%; border: 1px solid #d0d0d0"
+                                                    src="${result[i].avatar}"
+                                                    onerror="this.src='../static/images/user.png'">
+                                               </div>
+                                                <p>${result[i].username}</p>
+                                                <p>${result[i].nickname}</p>
+                                                <p>${result[i].gender}</p>
+                                                <button value="${result[i].username}" class="update">Update</button>
+                                                <button value="${result[i].username}" class="delete">Delete</button>
+                                           </div>`
+                        $('.user-info').append(table);
+                        }
+                    }
+                    $(document).ready(function() {
+		                $(".update").click(function() {
+                            var bId = this.value;
+                            date = {
+                                    "username": bId
+                                }
+                            location.href="/to_update_manager?id="+bId;
+		                })
+	                })
+
+	                $(document).ready(function() {
+		                $(".delete").click(function() {
+                            var bId = this.value;
+                            console.log(bId);
+                            date = {
+                                    "username": bId
+                                }
+                            $.ajax({
+                                url: "/delete_manager",
+                                data: JSON.stringify(date),
+                                type: "POST",
+                                dataType: "json",
+                                contentType: "application/json",
+                                success: function(result) {
+                                    if (result.result == "OK") {
+                                        toastr["success"]("User delete successfully")
+                                        setTimeout(function(){
+                                            window.location.href = "/manage_users";
+                                        }, 1000);
+                                    }
+                                }
+                            });
+		                })
+	                })
+                }
+        })
+    }
+
+
+
+
+</script>

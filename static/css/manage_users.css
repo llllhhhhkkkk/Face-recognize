@@ -1,0 +1,94 @@
+body{
+    min-height: 1050px;
+}
+
+.main{
+    text-align: center;
+    margin-top: 5%;
+}
+
+.header{
+    text-align: center;
+}
+
+.header h1{
+    font-family: 'Google Sans',Roboto,Arial,sans-serif;
+    font-size: 1.75rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 2.25rem;
+    hyphens: auto;
+    word-break: break-word;
+    word-wrap: break-word;
+    color: #202124;
+    margin: 0 0 8px 0;
+    padding: 0;
+}
+
+.header p{
+    letter-spacing: .00625em;
+    font-family: Roboto,Arial,sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5rem;
+    hyphens: auto;
+    word-break: break-word;
+    word-wrap: break-word;
+    color: #5f6368;
+    text-align: center;
+}
+
+.user-info{
+    text-align: left;
+    margin-left: 22%;
+    margin-right: 22%;
+    margin-top: 2%;
+    border: 0.1px solid #D0D0D0;
+    border-radius: 10px;
+
+}
+
+.user-head{
+    display:flex;
+    align-items: center;
+    margin-bottom: 2%;
+}
+
+.user-head p{
+    width: 20%;
+    text-align: center;
+    border-right: 0.1px solid #D0D0D0;
+}
+
+.users-info{
+    display:flex;
+    margin-bottom: 3%;
+}
+
+.users-info .avatar{
+    display:flex;
+    width:20%;
+    align-items: center;
+    justify-content: center;
+}
+
+.users-info p{
+    width:20%;
+    text-align: center;
+}
+
+.users-info button{
+    width:8%;
+    font-size:15px;
+    border-radius:10px;
+    border:none;
+    background-color: #2ea44f;
+    color: #fff;
+    padding:5px;
+    outline: none;
+    margin:10px;
+}
+
+.users-info button:hover{
+    background-color: #22863a;
+}

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Info</title>
+    <link href="../static/css/personal_info.css" rel='stylesheet' type='text/css'/>
+    <script src="../static/js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/toastr.min.css" />
+    <script src="../static/js/toastr.min.js"></script>
+</head>
+<body>
+    <div id="shadow" class="shadow_css"></div>
+<!--    <div id="updata_name" class="window_css">-->
+<!--        <div class="updata-header">-->
+<!--            <h1>Name Change</h1>-->
+<!--            <img onclick="close_name()" src="../static/images/close.png">-->
+<!--        </div>-->
+<!--        <div class="change">-->
+<!--            <p>NEW NAME:</p>-->
+<!--            <input type="text" id="new_name" placeholder="Please enter new name">-->
+<!--        </div>-->
+<!--        <button onclick="save_name()">Save</button>-->
+<!--    </div>-->
+
+    <div id="updata_birthday" class="window_css">
+        <div class="updata-header">
+            <h1>Birthday Change</h1>
+            <img onclick="close_birthday()" src="../static/images/close.png">
+        </div>
+        <div class="change">
+            <p>NEW BIRTHDAY:</p>
+            <input type="text" id="new_birthday" placeholder="Please enter new birthday">
+        </div>
+        <button onclick="save_birthday()">Save</button>
+    </div>
+
+    <div id="updata_gender" class="window_css">
+        <div class="updata-header">
+            <h1>Gender Change</h1>
+            <img onclick="close_gender()" src="../static/images/close.png">
+        </div>
+        <div class="change">
+            <p >NEW GENDER:
+                <input type="radio" name="gender" value="male" checked="checked" >Male
+                <input type="radio" name="gender" value="female" >Female
+            </p>
+        </div>
+        <button onclick="save_gender()">Save</button>
+    </div>
+
+    <div id="updata_age" class="window_css">
+        <div class="updata-header">
+            <h1>Age Change</h1>
+            <img onclick="close_age()" src="../static/images/close.png">
+        </div>
+        <div class="change">
+            <p>NEW AGE:</p>
+            <input type="text" id="new_age" placeholder="Please enter new age">
+        </div>
+        <button onclick="save_age()">Save</button>
+    </div>
+
+    <div id="updata_password" class="window_css">
+        <div class="updata-header">
+            <h1>Password Change</h1>
+            <img onclick="close_password()" src="../static/images/close.png">
+        </div>
+        <div class="change">
+            <p>NEW PASSWORD:</p>
+            <input type="password" id="new_password" placeholder="Please enter new password">
+        </div>
+        <div class="change">
+            <p>Re-enter:</p>
+            <input type="password" id="again_password" placeholder="Please enter new password again">
+        </div>
+        <div class="email">
+            <p>verification code:</p>
+            <input type="text" id="verification_code" placeholder="Please enter verification code">
+            <button id="obtain-code">Obtain</button>
+        </div>
+        <button id="save_password" onclick="save_password()">Save</button>
+    </div>
+
+    <div id="updata_email" class="window_css">
+        <div class="updata-header">
+            <h1>Email Change</h1>
+            <img onclick="close_email()" src="../static/images/close.png">
+        </div>
+        <div class="change">
+            <p>NEW EMAIL:</p>
+            <input type="text" id="new_email" placeholder="Please enter new email">
+        </div>
+        <button onclick="save_email()">Save</button>
+    </div>
+
+    <div id="updata_phone" class="window_css">
+        <div class="updata-header">
+            <h1>Phone Change</h1>
+            <img onclick="close_phone()" src="../static/images/close.png">
+        </div>
+        <div class="change">
+            <p>NEW PHONE:</p>
+            <input type="text" id="new_phone" placeholder="Please enter new phone">
+        </div>
+        <button onclick="save_phone()">Save</button>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <h1>Personal info</h1>
+            <p>Basic info, like your name and photo, that you use on system services</p>
+        </div>
+
+        <div class="basic_info">
+            <h1>Basic info</h1>
+            <p class="basic_infop">Some info may be visible to other people using system services.</p>
+
+            <div name="info" class="photo" style="display:flex;" onmousedown="">
+                <p class="p1">PHOTO</p>
+                <p class="p2">A photo helps personalize your account</p>
+                <input type="file" id="qiniuPic" name="qiniuPic" accept="image/*" style="display:none;">
+                <div class="avatar" onclick="photo_add()">
+                    <img style="width: 60px; height: 60px; border-radius: 100%; border: 1px solid #d0d0d0" id="img" src="{{current_user.avatar}}" onerror="this.src='../static/images/user.png'" alt="">
+                </div>
+            </div>
+
+            <div name="info" class="info" onmousedown="">
+                <p class="p1">ACCOUNT</p>
+                <p class="p2" id="username">{{current_user.username}}</p>
+            </div>
+
+            <div name="info" class="info" onmousedown="">
+                <p class="p1">NAME</p>
+                <p class="p2">{{current_user.nickname}}</p>
+<!--                <div class="updata_img">-->
+<!--                    <img onclick="updata_name()" src="../static/images/updata.png">-->
+<!--                </div>-->
+            </div>
+
+            <div name="info" class="info" onmousedown="">
+                <p class="p1">BIRTHDAY</p>
+                <p class="p2">{{current_user.birthday}}</p>
+                <div class="updata_img">
+                    <img onclick="updata_birthday()" src="../static/images/updata.png">
+                </div>
+            </div>
+
+            <div name="info" class="info" onmousedown="">
+                <p class="p1">GENDER</p>
+                <p class="p2">{{current_user.gender}}</p>
+                <div class="updata_img">
+                    <img onclick="updata_gender()" src="../static/images/updata.png">
+                </div>
+            </div>
+
+            <div name="info" class="info" onmousedown="">
+                <p class="p1">AGE</p>
+                <p class="p2">{{current_user.age}}</p>
+                <div class="updata_img">
+                    <img onclick="updata_age()" src="../static/images/updata.png">
+                </div>
+            </div>
+
+            <div name="info" class="info passwords" onmousedown="">
+                <p class="p1">PASSWORD</p>
+                <p class="p2">••••••••</p>
+                <div class="updata_img">
+                    <img onclick="updata_password()" src="../static/images/updata.png">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="basic_info">
+            <h1>Contact info</h1>
+            <div name="info" class="info" onmousedown="">
+                <p class="p1">EMAIL</p>
+                <p class="p2">{{current_user.email}}</p>
+                <div class="updata_img">
+                    <img onclick="updata_email()" src="../static/images/updata.png">
+                </div>
+            </div>
+
+            <div name="info" class="info" onmousedown="">
+                <p class="p1">PHONE</p>
+                <p class="p2">{{current_user.phone}}</p>
+                <div class="updata_img">
+                    <img onclick="updata_phone()" src="../static/images/updata.png">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    function updata_name(){
+		document.getElementById("updata_name").style.display = "block";
+		document.getElementById("shadow").style.display = "block";
+    }
+    function close_name(){
+        document.getElementById("updata_name").style.display = "none";
+		document.getElementById("shadow").style.display = "none";
+    }
+
+    function updata_birthday(){
+		document.getElementById("updata_birthday").style.display = "block";
+		document.getElementById("shadow").style.display = "block";
+    }
+    function close_birthday(){
+        document.getElementById("updata_birthday").style.display = "none";
+		document.getElementById("shadow").style.display = "none";
+    }
+
+    function updata_gender(){
+		document.getElementById("updata_gender").style.display = "block";
+		document.getElementById("shadow").style.display = "block";
+    }
+    function close_gender(){
+        document.getElementById("updata_gender").style.display = "none";
+		document.getElementById("shadow").style.display = "none";
+    }
+
+    function updata_age(){
+		document.getElementById("updata_age").style.display = "block";
+		document.getElementById("shadow").style.display = "block";
+    }
+    function close_age(){
+        document.getElementById("updata_age").style.display = "none";
+		document.getElementById("shadow").style.display = "none";
+    }
+
+    function updata_password(){
+		document.getElementById("updata_password").style.display = "block";
+		document.getElementById("shadow").style.display = "block";
+    }
+    function close_password(){
+        document.getElementById("updata_password").style.display = "none";
+		document.getElementById("shadow").style.display = "none";
+    }
+
+    function updata_email(){
+		document.getElementById("updata_email").style.display = "block";
+		document.getElementById("shadow").style.display = "block";
+    }
+    function close_email(){
+        document.getElementById("updata_email").style.display = "none";
+		document.getElementById("shadow").style.display = "none";
+    }
+
+    function updata_phone(){
+		document.getElementById("updata_phone").style.display = "block";
+		document.getElementById("shadow").style.display = "block";
+    }
+    function close_phone(){
+        document.getElementById("updata_phone").style.display = "none";
+		document.getElementById("shadow").style.display = "none";
+    }
+
+
+    function save_name(){
+        var formdata = {
+            "new_name":$("#new_name").val()
+        }
+        $.ajax({
+            url: "/update_name",
+            data: JSON.stringify(formdata),
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            success: function(result) {
+                if (result.result == "OK") {
+                    toastr["success"]("Date Update successfully")
+                    setTimeout(function(){
+                            window.location.href = "/personal_info";
+                    }, 1000);
+                }
+                else{
+                    toastr["error"](result.result)
+                }
+            },
+            error: function() {
+                toastr["error"]("网络连接失败");
+            }
+        })
+    }
+
+    function save_birthday(){
+        var formdata = {
+            "new_birthday":$("#new_birthday").val(),
+            "username":$("#username").text()
+        }
+        $.ajax({
+            url: "/update_birthday",
+            data: JSON.stringify(formdata),
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            success: function(result) {
+                if (result.result == "OK") {
+                    toastr["success"]("Date Update successfully")
+                    setTimeout(function(){
+                            window.location.href = "/personal_info";
+                    }, 1000);
+                }
+                else{
+                    toastr["error"](result.result)
+                }
+            },
+            error: function() {
+                toastr["error"]("网络连接失败");
+            }
+        })
+    }
+
+    function save_gender(){
+        var item = null;
+            var obj = document.getElementsByName("gender")
+            for (var i = 0; i < obj.length; i++) { //遍历Radio
+                if (obj[i].checked) {
+                    item = obj[i].value;
+            }
+        }
+        var formdata = {
+            "new_gender":item,
+            "username":$("#username").text()
+        }
+        $.ajax({
+            url: "/update_gender",
+            data: JSON.stringify(formdata),
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            success: function(result) {
+                if (result.result == "OK") {
+                    toastr["success"]("Date Update successfully")
+                    setTimeout(function(){
+                            window.location.href = "/personal_info";
+                    }, 1000);
+                }
+                else{
+                    toastr["error"](result.result)
+                }
+            },
+            error: function() {
+                toastr["error"]("网络连接失败");
+            }
+        })
+    }
+
+    function save_age(){
+        var formdata = {
+            "new_age":$("#new_age").val(),
+            "username":$("#username").text()
+        }
+        $.ajax({
+            url: "/update_age",
+            data: JSON.stringify(formdata),
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            success: function(result) {
+                if (result.result == "OK") {
+                    toastr["success"]("Date Update successfully")
+                    setTimeout(function(){
+                            window.location.href = "/personal_info";
+                    }, 1000);
+                }
+                else{
+                    toastr["error"](result.result)
+                }
+            },
+            error: function() {
+                toastr["error"]("网络连接失败");
+            }
+        })
+    }
+
+    var waitTime = 60;
+    document.getElementById("obtain-code").onclick = function() {
+        time(this);
+        $.ajax({
+            url: "/send_code",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            success: function(result) {
+                console.log(result)
+                toastr["success"]("Code send successfully")
+            }
+        })
+    }
+    function time(ele) {
+        if (waitTime == 0) {
+            ele.disabled=false;
+            ele.innerHTML = 'Obtain'
+            waitTime = 60;// 恢复计时
+        } else {
+            ele.disabled=true;
+            ele.innerHTML = waitTime
+            waitTime--;
+            setTimeout(function() {
+                time(ele)// 关键处-定时循环调用
+            }, 1000)
+        }
+    }
+
+    function save_password(){
+        var formdata = {
+            "new_password":$("#new_password").val(),
+            "username":$("#username").text(),
+            "inputCode":$("#verification_code").val(),
+            "againPassword":$("#again_password").val()
+        }
+        console.log(formdata)
+        $.ajax({
+            url: "/update_password",
+            data: JSON.stringify(formdata),
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            success: function(result) {
+                if (result.result == "OK") {
+                    toastr["success"]("Date Update successfully")
+                    setTimeout(function(){
+                            window.location.href = "/personal_info";
+                    }, 1000);
+                }
+                else{
+                    toastr["error"](result.result)
+                }
+            },
+            error: function() {
+                toastr["error"]("网络连接失败");
+            }
+        })
+    }
+
+    function save_email(){
+        var formdata = {
+            "new_email":$("#new_email").val(),
+            "username":$("#username").text()
+        }
+        $.ajax({
+            url: "/update_email",
+            data: JSON.stringify(formdata),
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            success: function(result) {
+                if (result.result == "OK") {
+                    toastr["success"]("Date Update successfully")
+                    setTimeout(function(){
+                            window.location.href = "/personal_info";
+                    }, 1000);
+                }
+                else{
+                    toastr["error"](result.result)
+                }
+            },
+            error: function() {
+                toastr["error"]("网络连接失败");
+            }
+        })
+    }
+
+    function save_phone(){
+        var formdata = {
+            "new_phone":$("#new_phone").val(),
+            "username":$("#username").text()
+        }
+        $.ajax({
+            url: "/update_phone",
+            data: JSON.stringify(formdata),
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            success: function(result) {
+                if (result.result == "OK") {
+                    toastr["success"]("Date Update successfully")
+                    setTimeout(function(){
+                            window.location.href = "/personal_info";
+                    }, 1000);
+                }
+                else{
+                    toastr["error"](result.result)
+                }
+            },
+            error: function() {
+                toastr["error"]("网络连接失败");
+            }
+        })
+    }
+
+    function photo_add() {
+        var input_file=$("#qiniuPic");
+        input_file.click();
+
+    }
+    $("#qiniuPic").change(function(){
+        $("#img").attr("src",URL.createObjectURL($(this)[0].files[0]));
+        var file = document.getElementById('qiniuPic').files[0]
+        console.log("读取源文件")
+        console.log(file)
+        var reader = new FileReader()
+        //将文件以Data URL形式读入页面
+        reader.readAsDataURL(file);
+        reader.onload = function() {
+            var imgUrlBase64 = this.result
+            var formdata = {
+            "new_avatar": imgUrlBase64,
+            "username":$("#username").text()
+             }
+            $.ajax({
+                url: "/update_avatar",
+                data: JSON.stringify(formdata),
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                success: function(result) {
+                    if (result.result == "OK") {
+                        toastr["success"]("Date Update successfully")
+                        setTimeout(function(){
+                                window.location.href = "/personal_info";
+                        }, 1000);
+                    }
+                },
+                error: function() {
+                    toastr["error"]("网络连接失败");
+                }
+            })
+        }
+    });
+
+</script>

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <title>face-recongnize</title>
+    <script src="../static/js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/toastr.min.css"/>
+    <script src="../static/js/toastr.min.js"></script>
+    <style>
+        .vd{
+            width:30em;
+            height:30em;
+            border:2px solid #D0D0D0;
+            border-radius:100%;
+        }
+
+        .container{
+            text-align: center;
+        }
+
+        .col-lg-8 button{
+            font-size:15px;
+            border-radius:10px;
+            border:none;
+            background-color: #2ea44f;
+            color: #fff;
+            padding:5px;
+            outline: none;
+            padding-left:10px;
+            padding-right:10px;
+        }
+
+        .col-lg-8 button:hover {
+            background-color: #22863a;
+        }
+
+        .tx{
+            display:flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8  offset-lg-2">
+            <h3 class="mt-5">face-recongnize</h3>
+            <img class="vd" src="{{ url_for('video_feed') }}" width="100%">
+            <div class="tx">
+                <p>{{user}},</p><p>{{text}}</p>
+                <input id="flag" type="text" style="display: none;" value="{{flag}}"/>
+                <input id="username" type="text" style="display: none;" value="{{user}}"/>
+            </div>
+            <button onclick="sign_in()">Click the sign in</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+<script>
+    function sign_in(){
+        const flag = document.getElementById("flag").value
+        console.log(flag)
+        console.log(document.getElementById("username").value)
+        if (flag == 1){
+            const name = document.getElementById("username").value
+            const time = new Date()
+            const year = time.getFullYear()
+            const month = time.getMonth() + 1
+            const date = time.getDate()
+            const hour = time.getHours()
+            const minute = time.getMinutes()
+            const second = time.getSeconds()
+            const formdate = {
+                "name": name,
+                "year": year,
+                "month": month,
+                "date": date,
+                "hour": hour,
+                "minute": minute,
+                "second": second
+            }
+            $.ajax({
+                url: "/sign_in",
+                data: JSON.stringify(formdate),
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                success: function(result) {
+                    if (result.result == "OK") {
+                        toastr["success"]("Sign in successfully")
+                        setTimeout(function(){
+                            window.location.href = "/home";
+                        }, 1000);
+                    }
+                    else if (result.result == "NO") {
+                        toastr["error"](result.msg)
+                    }
+                },
+                error: function() {
+                    toastr["error"]("网络连接失败");
+                }
+            })
+        }
+        else{
+            toastr["error"]("Face recognize defeat")
+        }
+    }
+</script>

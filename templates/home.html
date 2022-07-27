@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <style type="text/css">
+        .main{
+            width:100%;
+            height:100%;
+            text-align: center;
+            padding-top:5%;
+        }
+
+        .main img{
+            width:150px;
+            height:150px;
+            border:5px solid #484856;
+            border-radius:100%;
+        }
+
+        .main h1{
+             font-family: 'Google Sans',Roboto,Arial,sans-serif;
+             font-size: 1.75rem;
+             margin-block-start: 0.67em;
+             margin-block-end: 0.67em;
+             margin-inline-start: 0px;
+             margin-inline-end: 0px;
+        }
+
+        .main p{
+            color: #5f6368
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <img src="{{current_user.avatar}}" onerror="this.src='../static/images/user.png'">
+        <h1>Welcome {{current_user.nickname}}</h1><br/>
+        <p>Manage your info, privacy, and security to make system work better for you</p>
+    </div>
+</body>
+</html>

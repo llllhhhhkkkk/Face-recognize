@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="../static/css/index.css" rel='stylesheet' type='text/css'/>
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/toastr.min.css"/>
+    <script src="/static/js/toastr.min.js"></script>
+    <script src="../js/modernizr.js"></script>
+    <title>category</title>
+</head>
+<body>
+    <div class="header">
+        <img src="../static/images/Category.png">
+        <h1 style="width: 30%">Functional Classification</h1>
+        <img style="padding-left:65%" onclick="backtologin()" src="../static/images/exit.png">
+    </div>
+
+    <div class="main">
+        <div id="top" class="s-wrap site-wrapper">
+            <header class="s-header">
+
+                <div class="header__top">
+                    <div class="header__logo">
+                        <a class="site-logo" href="/home" target="iframe_a">
+                            <img src="../static/images/logo.svg" alt="Homepage">
+                        </a>
+                    </div>
+                </div> <!-- end header__top -->
+
+                <nav class="header__nav-wrap">
+
+                    <ul class="header__nav">
+                        <li class="current">
+                            <div>
+                                <img src="../static/images/Home.png">
+                            </div>
+                            <a href="/home" target="iframe_a" title="">Home</a>
+                        </li>
+                        <li>
+                            <div>
+                                <img src="../static/images/personal-info.png">
+                            </div>
+                            <a href="/personal_info" target="iframe_a" title="">Personal info</a>
+                        </li>
+                        <li>
+                            <div>
+                                <img src="../static/images/manage.png">
+                            </div>
+                            <a href="/manage_users" target="iframe_a" title="">Manage users</a>
+                        </li>
+                        <li>
+                            <div>
+                                <img src="../static/images/log.png">
+                            </div>
+                            <a href="/sign_in_log_manager" target="iframe_a" title="">Sign in log</a>
+                        </li>
+                        <li>
+                            <div>
+                                <img src="../static/images/forum.png">
+                            </div>
+                            <a href="/user_comment" target="iframe_a" title="">Forum</a>
+                        </li>
+                    </ul> <!-- end header__nav -->
+                </nav> <!-- end header__nav-wrap -->
+            </header> <!-- end s-header -->
+        </div>
+        <div class="main-iframe">
+                <iframe src="/home" name="iframe_a" frameborder="1" width="100%" height="100%"></iframe>
+        </div>
+    </div>
+
+
+</body>
+</html>
+<script>
+    function backtologin() {
+        window.location.href = "/logout"
+    }
+
+</script>

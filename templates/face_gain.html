@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>face_gain</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <link href="../static/css/face_gain.css" rel='stylesheet' type='text/css'/>
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/toastr.min.css" />
+    <script src="/static/js/toastr.min.js"></script>
+</head>
+<body>
+    <div class="face_gain">
+        <video width="300" height="300" id="myvideo"></video>
+        <canvas width="300" height="300" id="canvas"></canvas><br/>
+    </div>
+
+    <p>姓名：</p><input type="text" id="name"  disabled="disabled" value="{{current_user.nickname}}"/><br/>
+    <button onclick="opencamera()">打开摄像头</button>
+    <button onclick="takephoto()">开始人脸收集</button>
+    <script language="javascript">
+        myvideo = document.getElementById("myvideo")
+        function opencamera(){
+            cons={
+                video:{
+                    width:300,
+                    height:300
+                }
+            }
+            video = navigator.mediaDevices.getUserMedia(cons)
+            video.then(function(videoStream){
+                myvideo.srcObject = videoStream
+                myvideo.play()
+            })
+        }
+        canvas = document.getElementById("canvas")
+        function takephoto(){
+            const name = document.getElementById("name").value
+            var i = 0
+            for(i = 0;i <= 200;i++){
+                    ctx = canvas.getContext("2d")
+                ctx.drawImage(myvideo,0,0,300,300)
+                face_data = canvas.toDataURL()
+                face_data = face_data.substring(22)
+                $.post("/put_data",{"myimg":face_data,"num":i,"name":name},function(res){
+                    console.log(res)
+                })
+            }
+
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sign In</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../static/css/login.css" rel='stylesheet' type='text/css'/>
+    <!--字体-->
+    <link href='http://fonts.useso.com/css?family=PT+Sans:400,700,400italic,700italic|Oswald:400,300,700'
+          rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Exo+2' rel='stylesheet' type='text/css'>
+    <!--//js-->
+    <script src="http://ajax.useso.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/toastr.min.css" />
+    <script src="/static/js/toastr.min.js"></script>
+</head>
+<body>
+<!--SIGN UP-->
+<div class="container">
+    <img src="../static/images/Home.png">
+    <h1>Face recognition system login</h1>
+</div>
+<div class="login-form">
+    <div class="head-info">
+        <label class="lbl-1"> </label>
+        <label class="lbl-2"> </label>
+        <label class="lbl-3"> </label>
+    </div>
+    <div class="clear"></div>
+    <div class="avtar">
+        <img src="../static/images/login.png"/>
+    </div>
+    <input type="text" class="text" name="username" id="username" placeholder="Username">
+    <div class="key">
+        <input type="password" name="password" id="password" placeholder="Passowrd">
+    </div>
+    <div class="register">
+        <button id="register" value="Sign up" onclick="register()" style="margin-right:10%">Sign up</button>
+        <button type="submit" value="Sign in" onclick="login()">Sign in</button>
+    </div>
+    <div class="end">
+
+    </div>
+</div>
+
+</body>
+</html>
+<script>
+        function login() {
+            var formdata = {
+                "username": $("#username").val(),
+                "password": $("#password").val(),
+            }
+            $.ajax({
+                url: "/login",
+                type: "POST",
+                data: JSON.stringify(formdata),
+                dataType: "json",
+                contentType: "application/json",
+                success: function(result) {
+                    if (result.result == "OK") {
+                        toastr["success"]("登录成功")
+                        setTimeout(function(){
+                            window.location.href = result.next_url
+                        }, 1000);
+                    }
+                    else if (result.result == "NO") {
+                        toastr["error"](result.msg)
+                    }
+                },
+                error: function() {
+                    toastr["error"]("网络连接失败");
+                }
+            })
+        }
+
+        function register(){
+            toastr.success("前往注册")
+            setTimeout(function(){
+                window.location.href = "/register";
+            }, 1000);
+        }
+</script>
